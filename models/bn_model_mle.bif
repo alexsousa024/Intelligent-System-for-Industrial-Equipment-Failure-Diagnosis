@@ -1,0 +1,53 @@
+network unknown {
+}
+variable coolant_flow {
+    type discrete [ 3 ] { high, low, normal };
+}
+variable spindle_overheat {
+    type discrete [ 2 ] { No, Yes };
+}
+variable spindle_temp {
+    type discrete [ 3 ] { high, low, normal };
+}
+variable vibration_rms {
+    type discrete [ 3 ] { high, low, normal };
+}
+probability ( coolant_flow ) {
+    table 0.24790219907407407, 0.25286940586419754, 0.4992283950617284 ;
+}
+probability ( spindle_overheat | coolant_flow, spindle_temp, vibration_rms ) {
+    ( high, high, high ) 0.49332899446794665, 0.5066710055320534;
+    ( high, high, low ) 0.43636363636363634, 0.5636363636363636;
+    ( high, high, normal ) 0.48555452003727867, 0.5144454799627214;
+    ( high, low, high ) 1.0, 0.0;
+    ( high, low, low ) 1.0, 0.0;
+    ( high, low, normal ) 1.0, 0.0;
+    ( high, normal, high ) 1.0, 0.0;
+    ( high, normal, low ) 1.0, 0.0;
+    ( high, normal, normal ) 1.0, 0.0;
+    ( low, high, high ) 0.5010554089709762, 0.4989445910290237;
+    ( low, high, low ) 0.4885057471264368, 0.5114942528735632;
+    ( low, high, normal ) 0.48253404381290704, 0.5174659561870929;
+    ( low, low, high ) 1.0, 0.0;
+    ( low, low, low ) 1.0, 0.0;
+    ( low, low, normal ) 1.0, 0.0;
+    ( low, normal, high ) 1.0, 0.0;
+    ( low, normal, low ) 1.0, 0.0;
+    ( low, normal, normal ) 1.0, 0.0;
+    ( normal, high, high ) 0.5048570255848953, 0.4951429744151047;
+    ( normal, high, low ) 0.5, 0.5;
+    ( normal, high, normal ) 0.49731607199242184, 0.5026839280075781;
+    ( normal, low, high ) 1.0, 0.0;
+    ( normal, low, low ) 1.0, 0.0;
+    ( normal, low, normal ) 1.0, 0.0;
+    ( normal, normal, high ) 1.0, 0.0;
+    ( normal, normal, low ) 1.0, 0.0;
+    ( normal, normal, normal ) 1.0, 0.0;
+
+}
+probability ( spindle_temp ) {
+    table 0.24845679012345678, 0.2513623649691358, 0.5001808449074074 ;
+}
+probability ( vibration_rms ) {
+    table 0.24699797453703703, 0.25212191358024694, 0.5008801118827161 ;
+}

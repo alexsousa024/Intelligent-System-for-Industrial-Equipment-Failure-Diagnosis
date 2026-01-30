@@ -1,0 +1,85 @@
+network unknown {
+}
+variable BearingWearHigh {
+    type discrete [ 2 ] { 0, 1 };
+}
+variable CloggedFilter {
+    type discrete [ 2 ] { 0, 1 };
+}
+variable FanFault {
+    type discrete [ 2 ] { 0, 1 };
+}
+variable LowCoolingEfficiency {
+    type discrete [ 2 ] { 0, 1 };
+}
+variable coolant_flow {
+    type discrete [ 3 ] { high, low, normal };
+}
+variable spindle_overheat {
+    type discrete [ 2 ] { No, Yes };
+}
+variable spindle_temp {
+    type discrete [ 3 ] { high, low, normal };
+}
+variable vibration_rms {
+    type discrete [ 3 ] { high, low, normal };
+}
+probability ( BearingWearHigh ) {
+    table 0.4083092714915407, 0.5916907285084593 ;
+}
+probability ( CloggedFilter ) {
+    table 0.5158965411575797, 0.4841034588424204 ;
+}
+probability ( FanFault ) {
+    table 0.2761648095583193, 0.7238351904416807 ;
+}
+probability ( LowCoolingEfficiency ) {
+    table 0.03144781879939602, 0.9685521812006039 ;
+}
+probability ( coolant_flow | CloggedFilter ) {
+    ( 0 ) 0.33287758112999066, 0.22093898212498353, 0.44618343674502575;
+    ( 1 ) 0.15734613118103097, 0.28689683298513946, 0.5557570358338296;
+
+}
+probability ( spindle_overheat | coolant_flow, spindle_temp, vibration_rms ) {
+    ( high, high, high ) 0.49332899446794665, 0.5066710055320534;
+    ( high, high, low ) 0.43636363636363634, 0.5636363636363636;
+    ( high, high, normal ) 0.48555452003727867, 0.5144454799627214;
+    ( high, low, high ) 1.0, 0.0;
+    ( high, low, low ) 1.0, 0.0;
+    ( high, low, normal ) 1.0, 0.0;
+    ( high, normal, high ) 1.0, 0.0;
+    ( high, normal, low ) 1.0, 0.0;
+    ( high, normal, normal ) 1.0, 0.0;
+    ( low, high, high ) 0.5010554089709762, 0.4989445910290237;
+    ( low, high, low ) 0.4885057471264368, 0.5114942528735632;
+    ( low, high, normal ) 0.48253404381290704, 0.5174659561870929;
+    ( low, low, high ) 1.0, 0.0;
+    ( low, low, low ) 1.0, 0.0;
+    ( low, low, normal ) 1.0, 0.0;
+    ( low, normal, high ) 1.0, 0.0;
+    ( low, normal, low ) 1.0, 0.0;
+    ( low, normal, normal ) 1.0, 0.0;
+    ( normal, high, high ) 0.5048570255848953, 0.4951429744151047;
+    ( normal, high, low ) 0.5, 0.5;
+    ( normal, high, normal ) 0.49731607199242184, 0.5026839280075781;
+    ( normal, low, high ) 1.0, 0.0;
+    ( normal, low, low ) 1.0, 0.0;
+    ( normal, low, normal ) 1.0, 0.0;
+    ( normal, normal, high ) 1.0, 0.0;
+    ( normal, normal, low ) 1.0, 0.0;
+    ( normal, normal, normal ) 1.0, 0.0;
+
+}
+probability ( spindle_temp | FanFault, LowCoolingEfficiency ) {
+    ( 0, 0 ) 0.7579729093624847, 0.1292005754829653, 0.11282651515455003;
+    ( 0, 1 ) 0.32375835026142086, 0.19242017743451426, 0.48382147230406497;
+    ( 1, 0 ) 0.7701969930025782, 0.2081441967445967, 0.021658810252825046;
+    ( 1, 1 ) 0.19647484899362386, 0.2767671440986564, 0.5267580069077198;
+
+}
+probability ( vibration_rms | BearingWearHigh ) {
+    ( 0 ) 0.34432424442017057, 0.008209643470069215, 0.6474661121097602;
+    ( 1 ) 0.17983582979100324, 0.4204389692954621, 0.3997252009135347;
+
+}

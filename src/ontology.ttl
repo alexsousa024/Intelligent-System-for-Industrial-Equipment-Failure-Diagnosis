@@ -1,0 +1,214 @@
+@prefix : <http://www.semanticweb.org/admin/ontologies/2025/11/untitled-ontology-6/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@base <http://www.semanticweb.org/admin/ontologies/2025/11/untitled-ontology-6/> .
+
+<http://example.org/rodrigobatistadiagnostics#> rdf:type owl:Ontology .
+
+#################################################################
+#    Object Properties
+#################################################################
+
+###  http://www.semanticweb.org/admin/ontologies/2025/11/untitled-ontology-6/affectsComponent
+:affectsComponent rdf:type owl:ObjectProperty ;
+                  rdfs:domain :Cause ;
+                  rdfs:range :Component .
+
+
+###  http://www.semanticweb.org/admin/ontologies/2025/11/untitled-ontology-6/causesSymptom
+:causesSymptom rdf:type owl:ObjectProperty ;
+               rdfs:domain :Cause ;
+               rdfs:range :Symptom .
+
+
+###  http://www.semanticweb.org/admin/ontologies/2025/11/untitled-ontology-6/hasComponent
+:hasComponent rdf:type owl:ObjectProperty ;
+              rdfs:domain :Component ,
+                          :Machine ;
+              rdfs:range :Component .
+
+
+###  http://www.semanticweb.org/admin/ontologies/2025/11/untitled-ontology-6/mitigatesCause
+:mitigatesCause rdf:type owl:ObjectProperty ;
+                rdfs:domain :Procedure ;
+                rdfs:range :Cause .
+
+
+###  http://www.semanticweb.org/admin/ontologies/2025/11/untitled-ontology-6/targetsComponent
+:targetsComponent rdf:type owl:ObjectProperty ;
+                  rdfs:domain :Procedure ;
+                  rdfs:range :Component .
+
+
+#################################################################
+#    Data properties
+#################################################################
+
+###  http://www.semanticweb.org/admin/ontologies/2025/11/untitled-ontology-6/hasEffortHours
+:hasEffortHours rdf:type owl:DatatypeProperty ;
+                rdfs:domain :Procedure ;
+                rdfs:range xsd:decimal .
+
+
+###  http://www.semanticweb.org/admin/ontologies/2025/11/untitled-ontology-6/hasRiskRating
+:hasRiskRating rdf:type owl:DatatypeProperty ;
+               rdfs:domain :Procedure ;
+               rdfs:range xsd:int .
+
+
+###  http://www.semanticweb.org/admin/ontologies/2025/11/untitled-ontology-6/hasSparePartsEUR
+:hasSparePartsEUR rdf:type owl:DatatypeProperty ;
+                  rdfs:domain :Procedure ;
+                  rdfs:range xsd:int .
+
+
+#################################################################
+#    Classes
+#################################################################
+
+###  http://www.semanticweb.org/admin/ontologies/2025/11/untitled-ontology-6/Cause
+:Cause rdf:type owl:Class .
+
+
+###  http://www.semanticweb.org/admin/ontologies/2025/11/untitled-ontology-6/Component
+:Component rdf:type owl:Class .
+
+
+###  http://www.semanticweb.org/admin/ontologies/2025/11/untitled-ontology-6/Machine
+:Machine rdf:type owl:Class .
+
+
+###  http://www.semanticweb.org/admin/ontologies/2025/11/untitled-ontology-6/Procedure
+:Procedure rdf:type owl:Class .
+
+
+###  http://www.semanticweb.org/admin/ontologies/2025/11/untitled-ontology-6/Symptom
+:Symptom rdf:type owl:Class .
+
+
+#################################################################
+#    Individuals
+#################################################################
+
+###  http://www.semanticweb.org/admin/ontologies/2025/11/untitled-ontology-6/Bearing
+:Bearing rdf:type owl:NamedIndividual ,
+                  :Component .
+
+
+###  http://www.semanticweb.org/admin/ontologies/2025/11/untitled-ontology-6/BearingWearHigh
+:BearingWearHigh rdf:type owl:NamedIndividual ,
+                          :Cause ;
+                 :affectsComponent :Bearing ;
+                 :causesSymptom :HighVibration .
+
+
+###  http://www.semanticweb.org/admin/ontologies/2025/11/untitled-ontology-6/CleanFilter
+:CleanFilter rdf:type owl:NamedIndividual ,
+                      :Procedure ;
+             :mitigatesCause :CloggedFilter ;
+             :targetsComponent :Filter ;
+             :hasEffortHours 1.5 ;
+             :hasRiskRating 1 ;
+             :hasSparePartsEUR 50 .
+
+
+###  http://www.semanticweb.org/admin/ontologies/2025/11/untitled-ontology-6/CloggedFilter
+:CloggedFilter rdf:type owl:NamedIndividual ,
+                        :Cause ;
+               :affectsComponent :Filter ;
+               :causesSymptom :LowCoolantFlow .
+
+
+###  http://www.semanticweb.org/admin/ontologies/2025/11/untitled-ontology-6/CoolingSystem
+:CoolingSystem rdf:type owl:NamedIndividual ,
+                        :Component ;
+               :hasComponent :Fan ,
+                             :Filter .
+
+
+###  http://www.semanticweb.org/admin/ontologies/2025/11/untitled-ontology-6/Fan
+:Fan rdf:type owl:NamedIndividual ,
+              :Component .
+
+
+###  http://www.semanticweb.org/admin/ontologies/2025/11/untitled-ontology-6/FanFault
+:FanFault rdf:type owl:NamedIndividual ,
+                   :Cause ;
+          :affectsComponent :Fan ;
+          :causesSymptom :HighSpindleTemp .
+
+
+###  http://www.semanticweb.org/admin/ontologies/2025/11/untitled-ontology-6/Filter
+:Filter rdf:type owl:NamedIndividual ,
+                 :Component .
+
+
+###  http://www.semanticweb.org/admin/ontologies/2025/11/untitled-ontology-6/FlushCoolant
+:FlushCoolant rdf:type owl:NamedIndividual ,
+                       :Procedure ;
+              :mitigatesCause :LowCoolingEfficiency ;
+              :targetsComponent :CoolingSystem ;
+              :hasEffortHours 2.0 ;
+              :hasRiskRating 2 ;
+              :hasSparePartsEUR 90 .
+
+
+###  http://www.semanticweb.org/admin/ontologies/2025/11/untitled-ontology-6/HighSpindleTemp
+:HighSpindleTemp rdf:type owl:NamedIndividual ,
+                          :Symptom .
+
+
+###  http://www.semanticweb.org/admin/ontologies/2025/11/untitled-ontology-6/HighVibration
+:HighVibration rdf:type owl:NamedIndividual ,
+                        :Symptom .
+
+
+###  http://www.semanticweb.org/admin/ontologies/2025/11/untitled-ontology-6/LowCoolantFlow
+:LowCoolantFlow rdf:type owl:NamedIndividual ,
+                         :Symptom .
+
+
+###  http://www.semanticweb.org/admin/ontologies/2025/11/untitled-ontology-6/LowCoolingEfficiency
+:LowCoolingEfficiency rdf:type owl:NamedIndividual ,
+                               :Cause ;
+                      :affectsComponent :CoolingSystem ;
+                      :causesSymptom :HighSpindleTemp .
+
+
+###  http://www.semanticweb.org/admin/ontologies/2025/11/untitled-ontology-6/M-A
+:M-A rdf:type owl:NamedIndividual ,
+              :Machine ;
+     :hasComponent :CoolingSystem ,
+                   :Spindle .
+
+
+###  http://www.semanticweb.org/admin/ontologies/2025/11/untitled-ontology-6/RepairFan
+:RepairFan rdf:type owl:NamedIndividual ,
+                    :Procedure ;
+           :mitigatesCause :FanFault ;
+           :targetsComponent :Fan ;
+           :hasEffortHours 2.0 ;
+           :hasRiskRating 2 ;
+           :hasSparePartsEUR 150 .
+
+
+###  http://www.semanticweb.org/admin/ontologies/2025/11/untitled-ontology-6/ReplaceBearing
+:ReplaceBearing rdf:type owl:NamedIndividual ,
+                         :Procedure ;
+                :mitigatesCause :BearingWearHigh ;
+                :targetsComponent :Bearing ;
+                :hasEffortHours 6.0 ;
+                :hasRiskRating 3 ;
+                :hasSparePartsEUR 600 .
+
+
+###  http://www.semanticweb.org/admin/ontologies/2025/11/untitled-ontology-6/Spindle
+:Spindle rdf:type owl:NamedIndividual ,
+                  :Component ;
+         :hasComponent :Bearing .
+
+
+###  Generated by the OWL API (version 4.5.29.2024-05-13T12:11:03Z) https://github.com/owlcs/owlapi
